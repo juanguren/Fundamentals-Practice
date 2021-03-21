@@ -12,18 +12,30 @@ import { mockUser } from './mockData/user';
 UserSchema.create = jest.fn();
 
 describe('Simple Stuff Tests', () => {
+    let req: any, res: any;
+
+    beforeEach(() => {
+        req = httpMock.createRequest();
+        res = httpMock.createResponse();
+
+        req.body = mockUser;
+        simpleStuff(req, res); // When called..
+    });
     it('Test simple return endpoint', () => {
         expect(typeof simpleStuff).toBe('function');
     });
 
     it('Test that the model is called and filled with appropiate data', () => {
-        let req = httpMock.createRequest();
-        req.body = mockUser;
+        expect(UserSchema.create).toBeCalledWith(mockUser); // ..schema will include a mockUser-like body
+    });
 
-        let res = httpMock.createResponse();
-        let next = jest.fn();
-        simpleStuff(req, res);
-        
-        expect(UserSchema.create).toBeCalledWith(req.body);
+    it('Should return a 201 status code', () => {
+        expect(res.statusCode).toBe(201); // The method will returna 201
+    });
+
+    it('Should return a specific JSON object', () => {
+        expect(res._getJSONData()).toMatchObject({
+            message: true
+        });
     });
 });
