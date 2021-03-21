@@ -8,8 +8,8 @@ const simpleStuff = (
     req : Request,
     res: Response
 ) => {
-    const { data } = req.params;
     UserSchema.create(req.body);
+    res.status(201).json({ message: true })
 };
 
 const modelTestNoExpress = () => {
