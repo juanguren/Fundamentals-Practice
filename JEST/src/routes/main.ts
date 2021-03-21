@@ -21,6 +21,6 @@ mainRouter.use((
     next();
 })
 mainRouter.get('/test1', shouldI);
-mainRouter.get('/return/:data', simpleStuff);
+mainRouter.post('/return/:data', simpleStuff);
 
 export default mainRouter;
