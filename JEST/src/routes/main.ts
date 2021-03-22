@@ -5,15 +5,18 @@ import {
     Request,
     Response
 } from 'express';
-import {shouldI} from '../controllers/test1';
-import { simpleStuff } from '../controllers/test2';
+import {shouldI} from '../controllers/apiMethod';
+import { 
+    simpleStuff,
+    getUsers
+} from '../controllers/simpleMethod';
 
 const mainRouter = Router();
 mainRouter.use(json());
 
 mainRouter.use((
-    req: Request,
-    res: Response,
+    _req: Request,
+    _res: Response,
     next: NextFunction
 ) => {
     const date = new Date();
@@ -21,6 +24,7 @@ mainRouter.use((
     next();
 })
 mainRouter.get('/test1', shouldI);
-mainRouter.post('/return/:data', simpleStuff);
+mainRouter.post('/data/create', simpleStuff);
+mainRouter.get('/data/get', getUsers);
 
 export default mainRouter;

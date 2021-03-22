@@ -15,3 +15,5 @@ app.use('/main', mainRouter);
 app.listen(PORT, () => {
     console.log("Listening in port " + PORT);
 });
+
+export default app;
