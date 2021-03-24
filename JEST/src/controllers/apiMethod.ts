@@ -1,5 +1,5 @@
 
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import axios, { AxiosResponse } from 'axios';
 
 interface officialResponse {
@@ -17,17 +17,21 @@ export const shouldI = async (
     res: Response
 ) => {
     const url = 'https://shouldideploy.today/api?tz=UTC';
-    const request : AxiosResponse = await axios.get(url)
+    try {
+        const request : AxiosResponse = await axios.get(url)
         .catch((error) => { throw Error(error) });
-    const shouldIDeploy = request.data;
-    const finalResponse : officialResponse = {
-        shouldIDeploy: {
-            message: shouldIDeploy.message,
-            shouldI: shouldIDeploy.shouldideploy,
-            myResponse: shouldIDeploy.shouldideploy 
-                ? 'WOHOOO'
-                : 'SHIT'
-        }
-    };
-    return res.json(finalResponse);
+        const shouldIDeploy = request.data;
+        const finalResponse : officialResponse = {
+            shouldIDeploy: {
+                message: shouldIDeploy.message,
+                shouldI: shouldIDeploy.shouldideploy,
+                myResponse: shouldIDeploy.shouldideploy 
+                    ? 'WOHOOO'
+                    : 'SHIT'
+            }
+        };
+        return res.json(finalResponse);
+    } catch (error) {
+        return res.status(400).json({message: 'Error'});
+    }
 }

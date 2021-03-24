@@ -23,7 +23,7 @@ mainRouter.use((
     console.log(date);
     next();
 })
-mainRouter.get('/test1', shouldI);
+mainRouter.get('/shouldI', shouldI);
 mainRouter.post('/data/create', simpleStuff);
 mainRouter.get('/data/get', getUsers);
 

@@ -14,15 +14,6 @@ const simpleStuff = async(
     }
 };
 
-/*UserSchema.create({
-    professionType: 'RETIRED',
-    admin: '',
-    age: '12',
-    income: 50000,
-    name: 'HUGO',
-    _id: 500
-});*/
-
 const getUsers = async (
     req: Request,
     res: Response
