@@ -2,10 +2,10 @@
   "name": "jest-express-ts",
   "version": "1.0.0",
   "description": "Test with Express",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --watchAll",
-    "dev": "nodemon /src/server.ts",
+    "dev": "nodemon ./src/server.ts",
     "build": "tsc -p ."
   },
   "author": "JFA",
