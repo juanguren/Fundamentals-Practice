@@ -1,6 +1,6 @@
 
 import request from 'supertest';
-import app from '../../server';
+import app from '../server';
 import { mockUser } from './mockData/user';
 
 const endpointURL = '/main/data/create';
