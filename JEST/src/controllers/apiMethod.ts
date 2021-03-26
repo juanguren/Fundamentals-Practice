@@ -30,7 +30,7 @@ export const shouldI = async (
                     : 'SHIT'
             }
         };
-        return res.json(finalResponse);
+        return res.status(200).json(finalResponse);
     } catch (error) {
         return res.status(400).json({message: 'Error'});
     }
