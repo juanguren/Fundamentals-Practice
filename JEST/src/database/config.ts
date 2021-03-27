@@ -1,30 +1,7 @@
 
-import Mongoose, { Schema, Document } from 'mongoose';
-import { ProfessionEnum } from '../model/model-interfaces';
-
-export interface IUser extends Document {
-    id: string;
-    name: string;
-    age: string;
-    income: number;
-    admin: boolean;
-    professionType: ProfessionEnum;
-}
-
-const UserSchema : Schema = new Schema({
-    id: { type: String, required: true, unique: true },
-    name: { type: String, required: true },
-    age: {type: String, required: true },
-    income: { type: Number, required: true },
-    admin: { type: Boolean, required: true },
-    professionType: 
-    { 
-        type: String,
-        enum: [ 'STUDENT', 'PROFESSIONAL', 'RETIRED' ],
-        required: true,
-        default: 'STUDENT'
-    }
-});
+import Mongoose, { Schema, Document, model } from 'mongoose';
+import { IUser } from './Users/users.types';
+import UserSchema from "./Users/users.schema";
 
 export const mongoConnection = () => {
     const URI = "mongodb://localhost:27017/ts_Jest";
@@ -45,4 +22,4 @@ export const mongoConnection = () => {
     });
 };
 
-export default Mongoose.model<IUser>('User', UserSchema);
+export default model<IUser>('User', UserSchema);
