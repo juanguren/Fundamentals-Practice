@@ -16,5 +16,4 @@ export enum ProfessionEnum {
     RETIRED = 'RETIRED'
 }
 
-export interface IUserDocument extends Document {}
-export interface IUserModel extends Model<IUserDocument> {}
+export interface IUserModel extends Model<IUser> {} // Represents a standard mongoose model
