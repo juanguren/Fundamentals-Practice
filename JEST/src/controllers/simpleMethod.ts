@@ -7,10 +7,10 @@ const simpleStuff = async(
     res: Response
 ) => {
     try {
-        UserSchema.create(req.body);
+        await UserSchema.create(req.body);
         res.status(201).json({ message: true })
     } catch (error) {
-        res.status(400).json({ message: 'Error', error })
+        res.status(400).json({ error })
     }
 };
 
