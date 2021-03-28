@@ -1,11 +1,6 @@
 
 import { Document, Model } from "mongoose";
 
-export interface ILog extends Document {
-    route: String;
-    date: Date;
-}
-
 export interface IUser extends Document {
     code: string;
     name: string;

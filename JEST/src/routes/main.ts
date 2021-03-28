@@ -10,7 +10,7 @@ import {
     simpleStuff,
     getUsers
 } from '../controllers/simpleMethod';
-import { logModel } from '../database/Users/users.model';
+import LogSchema from '../database/Logs/logs.model';
 
 const mainRouter = Router();
 mainRouter.use(json());
@@ -23,7 +23,7 @@ mainRouter.use( async (
     try {
         const date = new Date();
         const route = req.originalUrl;
-        await logModel.create({ route, date });
+        await LogSchema.create({ route, date });
         next();
     } catch (error) {
         return res.status(400).json(error);
