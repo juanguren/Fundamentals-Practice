@@ -10,19 +10,24 @@ import {
     simpleStuff,
     getUsers
 } from '../controllers/simpleMethod';
+import { logModel } from '../database/Users/users.model';
 
 const mainRouter = Router();
 mainRouter.use(json());
 
-mainRouter.use((
+mainRouter.use( async (
     req: Request,
-    _res: Response,
+    res: Response,
     next: NextFunction
 ) => {
-    const date = new Date();
-    const route = req.originalUrl;
-    console.log({ date, route });
-    next();
+    try {
+        const date = new Date();
+        const route = req.originalUrl;
+        await logModel.create({ route, date });
+        next();
+    } catch (error) {
+        return res.status(400).json(error);
+    }
 })
 mainRouter.get('/shouldI', shouldI);
 mainRouter.post('/data/create', simpleStuff);

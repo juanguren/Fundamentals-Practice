@@ -1,6 +1,14 @@
 
 import { model } from "mongoose";
-import { IUser } from "./users.types";
-import UserSchema from "./users.schema";
+import { 
+    IUser,
+    ILog
+} from "./users.types";
+import {
+    UserSchema,
+    LogSchema
+} from "./users.schema";
+
+export const logModel = model<ILog>("Log", LogSchema);
 
 export default model<IUser>("User", UserSchema);
