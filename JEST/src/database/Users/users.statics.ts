@@ -6,10 +6,10 @@ import UserSchema from "./users.model";
 
 export const findOrCreate = async (
     data: IUser,
-    userId: string
+    userCode: string
 ): Promise<IUser> => {
     try {
-        const record = await UserSchema.findOne({ id: userId });
+        const record = await UserSchema.findOne({ id: userCode });
         if (record) {
             return record;
         } else{
@@ -21,11 +21,10 @@ export const findOrCreate = async (
 };
 
 export const findByCode = async (
-    model: IUser,
     userCode: string
-): Promise<IUser[]> => {
+): Promise<any> => {
     try {
-        return await UserSchema.find({ id: userCode });
+        return await UserSchema.findOne({ code: userCode });
     } catch (error) {
         return error;
     }
