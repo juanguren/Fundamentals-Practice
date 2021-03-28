@@ -15,12 +15,13 @@ const mainRouter = Router();
 mainRouter.use(json());
 
 mainRouter.use((
-    _req: Request,
+    req: Request,
     _res: Response,
     next: NextFunction
 ) => {
     const date = new Date();
-    console.log(date);
+    const route = req.originalUrl;
+    console.log({ date, route });
     next();
 })
 mainRouter.get('/shouldI', shouldI);

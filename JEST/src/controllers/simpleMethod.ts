@@ -23,8 +23,8 @@ const getUsers = async (
     req: Request,
     res: Response
 ) => {
-    const { id: userId } = req.params;
-    const response = await UserSchema.findOne({ code: userId });
+    const { code: userCode } = req.params;
+    const response = await UserSchema.findOne({ code: userCode });
     if (response) {
         return res.json(response)   
     } else{

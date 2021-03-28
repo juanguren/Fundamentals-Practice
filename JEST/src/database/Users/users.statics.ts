@@ -13,8 +13,7 @@ export const findOrCreate = async (
         if (record) {
             return record;
         } else{
-            const res = await UserSchema.create( data );
-            return res;
+            return await UserSchema.create( data );
         }
     } catch (error) {
         return error;
