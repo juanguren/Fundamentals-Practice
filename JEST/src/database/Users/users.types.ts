@@ -2,7 +2,7 @@
 import { Document, Model } from "mongoose";
 
 export interface IUser extends Document {
-    id: string;
+    code: string;
     name: string;
     age: string;
     income: number;
@@ -15,5 +15,3 @@ export enum ProfessionEnum {
     PROFESSIONAL = 'PROFESSIONAL',
     RETIRED = 'RETIRED'
 }
-
-export interface IUserModel extends Model<IUser> {} // Represents a standard mongoose model

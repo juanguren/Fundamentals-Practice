@@ -25,6 +25,6 @@ mainRouter.use((
 })
 mainRouter.get('/shouldI', shouldI);
 mainRouter.post('/data/create', simpleStuff);
-mainRouter.get('/data/get', getUsers);
+mainRouter.get('/data/get/:code', getUsers);
 
 export default mainRouter;

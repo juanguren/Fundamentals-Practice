@@ -1,18 +1,22 @@
 
 // Static methods that will serve as shorcuts for basic Model operations (CRUD)
 
-import { IUser, IUserModel } from "./users.types";
+import { IUser } from "./users.types";
+import UserSchema from "./users.model";
 
 export const findOrCreate = async (
-    model: IUserModel,
+    data: IUser,
     userId: string
 ): Promise<IUser> => {
     try {
-        const record = await model.findOne({ userId });
+        const record = await UserSchema.findOne({ id: userId });
+        console.log(record)
         if (record) {
             return record;
         } else{
-            return model.create({ userId });
+            const res = await UserSchema.create( data );
+            console.log(res)
+            return res;
         }
     } catch (error) {
         return error;
@@ -20,11 +24,11 @@ export const findOrCreate = async (
 };
 
 export const findByCode = async (
-    model: IUserModel,
+    model: IUser,
     userCode: string
 ): Promise<IUser[]> => {
     try {
-        return await model.find({ code: userCode });
+        return await UserSchema.find({ id: userCode });
     } catch (error) {
         return error;
     }

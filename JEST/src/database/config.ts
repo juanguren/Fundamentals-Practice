@@ -1,7 +1,6 @@
 
 import Mongoose, { Schema, Document, model } from 'mongoose';
 import { IUser } from './Users/users.types';
-import UserSchema from "./Users/users.schema";
 
 export const mongoConnection = () => {
     const URI = "mongodb://localhost:27017/ts_Jest";
@@ -21,5 +20,3 @@ export const mongoConnection = () => {
         console.log("Error connecting to database");
     });
 };
-
-export default model<IUser>('User', UserSchema);
