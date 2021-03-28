@@ -10,12 +10,10 @@ export const findOrCreate = async (
 ): Promise<IUser> => {
     try {
         const record = await UserSchema.findOne({ id: userId });
-        console.log(record)
         if (record) {
             return record;
         } else{
             const res = await UserSchema.create( data );
-            console.log(res)
             return res;
         }
     } catch (error) {

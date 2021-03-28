@@ -3,7 +3,7 @@ import Mongoose, { Schema, Document, model } from 'mongoose';
 import { IUser } from './Users/users.types';
 
 export const mongoConnection = () => {
-    const URI = "mongodb://localhost:27017/ts_Jest";
+    const URI = "mongodb://localhost:27017/users_jest";
 
     Mongoose.connect(URI, {
         useNewUrlParser: true,

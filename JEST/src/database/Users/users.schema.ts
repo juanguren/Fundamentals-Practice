@@ -8,7 +8,7 @@ import {
 //https://medium.com/swlh/using-typescript-with-mongodb-393caf7adfef
 
 const UserSchema : Schema = new Schema({
-    id: { type: String, required: true, unique: true },
+    code: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     age: {type: String, required: true },
     income: { type: Number, required: true },
