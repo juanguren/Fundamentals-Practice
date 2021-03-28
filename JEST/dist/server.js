@@ -6,8 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const moment_1 = __importDefault(require("moment"));
 const main_1 = __importDefault(require("./routes/main"));
+const config_1 = require("./database/config");
 const PORT = 5000 || 3000;
 const app = express_1.default();
+config_1.mongoConnection();
 app.get('/', (req, res) => {
     const date = moment_1.default();
     res.json({ date });

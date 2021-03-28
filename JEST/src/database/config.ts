@@ -1,6 +1,5 @@
 
-import Mongoose, { Schema, Document, model } from 'mongoose';
-import { IUser } from './Users/users.types';
+import Mongoose from 'mongoose';
 
 export const mongoConnection = () => {
     const URI = "mongodb://localhost:27017/users_jest";

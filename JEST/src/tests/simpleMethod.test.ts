@@ -2,7 +2,7 @@
 import { 
     simpleStuff
 } from '../controllers/simpleMethod';
-import UserSchema from "../database/config";
+import UserSchema from "../database/Users/users.model";
 import  httpMock from 'node-mocks-http';
 import { mockUser } from './mockData/user';
 
