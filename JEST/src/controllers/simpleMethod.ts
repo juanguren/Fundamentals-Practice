@@ -11,9 +11,12 @@ const simpleStuff = async(
     res: Response
 ) => {
     try {
-        const { code } = req.body;
-        const userResponse = await findOrCreate(req.body, code);
-        res.status(200).json(userResponse)
+        const { code, name } = req.body;
+        await findOrCreate(req.body, code);
+        res.status(200).json({
+            message: `User${name} was correctly created`,
+            code
+        });
     } catch (error) {
         res.status(400).json({ error })
     }

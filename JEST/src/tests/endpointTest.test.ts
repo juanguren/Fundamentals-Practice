@@ -11,9 +11,9 @@ describe(`Test ${endpointURL}`, () => {
             .post(endpointURL)
             .send(mockUser);
 
-        expect(response.status).toBe(201);
+        expect(response.status).toBe(200);
         expect(response.body).toMatchObject({
-            message: true
+            userResponse: mockUser
         });
     });
 });
