@@ -20,7 +20,4 @@ describe('Testing API middleware', () => {
     it('Should return a 201 status code', () => {
         expect(res.statusCode).toBe(200); // The method will returna 200
     });
-    it('Should return a 400 status in case of error', () => {
-        expect(res.statusCode).toBe(400);
-    })
 });
