@@ -1,10 +1,10 @@
 
 import { 
     simpleStuff
-} from '../controllers/simpleMethod';
-import UserSchema from "../database/config";
+} from '../../controllers/simpleMethod';
+import UserSchema from "../../database/config";
 import  httpMock from 'node-mocks-http';
-import { mockUser } from './mockData/user';
+import { mockUser } from '../mockData/user';
 
 // * Mocks create method to avoid creating an actual DB record
 // * Overrides the actual .create() with a mock method that will check if the schema can be correctly called
