@@ -6,6 +6,10 @@ import { mongoConnection } from './database/config';
 const PORT = 5000 || 3000;
 const app = express();
 
+app.listen(PORT, () => {
+    console.log("Listening in port " + PORT);
+});
+
 mongoConnection();
 
 app.get('/', (req: Request, res: Response) => {
@@ -14,9 +18,5 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/main', mainRouter);
-
-app.listen(PORT, () => {
-    console.log("Listening in port " + PORT);
-});
 
 export default app;

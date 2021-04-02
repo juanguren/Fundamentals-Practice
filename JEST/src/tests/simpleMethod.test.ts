@@ -12,6 +12,7 @@ UserSchema.create = jest.fn();
 
 describe('Simple Middleware Tests', () => {
     let req: any, res: any;
+    const { name, code } = mockUser;
 
     beforeEach(() => {
         req = httpMock.createRequest();
@@ -34,7 +35,7 @@ describe('Simple Middleware Tests', () => {
 
     it('Should return a specific JSON object', () => {
         expect(res._getJSONData()).toMatchObject({
-            message: true
+            message: `User ${name} succesfully created`, code
         });
     });
 });

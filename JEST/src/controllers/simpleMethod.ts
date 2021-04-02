@@ -11,7 +11,8 @@ const simpleStuff = async(
         await UserSchema.create(req.body);
         res.status(201).json({ message: `User ${name} succesfully created`, code });
     } catch (error) {
-        res.status(400).json({ message: 'Error creating user', error });
+        const { errors: errorMessage } = error;
+        res.status(400).json({ message: 'Error creating user', errorMessage });
     }
 };
 

@@ -6,6 +6,8 @@ import { mockUser } from './mockData/user';
 const endpointURL = '/main/data/create';
 
 describe(`Test ${endpointURL}`, () => {
+    const { name, code } = mockUser;
+
     it('Should be a POST that creates a DB entry (user)', async () =>{
         const response = await request(app)
             .post(endpointURL)
@@ -13,7 +15,7 @@ describe(`Test ${endpointURL}`, () => {
 
         expect(response.status).toBe(201);
         expect(response.body).toMatchObject({
-            message: true
+            message: `User ${name} succesfully created`, code
         });
     });
 });

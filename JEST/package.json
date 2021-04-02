@@ -4,7 +4,7 @@
   "description": "Test with Express",
   "main": "server.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
     "dev": "nodemon ./src/server.ts",
     "build": "tsc -p ."
   },
