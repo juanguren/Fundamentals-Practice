@@ -6,9 +6,8 @@ import { mockUser } from '../mockData/user';
 const endpointURL = '/main/data/create';
 
 describe(`Test ${endpointURL}`, () => {
-    const { name, code } = mockUser;
-
     it('Should be a POST that creates a DB entry (user)', async () =>{
+        const { name, code } = mockUser;
         const response = await request(app)
             .post(endpointURL)
             .send(mockUser);
