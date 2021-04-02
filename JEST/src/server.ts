@@ -6,17 +6,17 @@ import { mongoConnection } from './database/config';
 const PORT = 5000 || 3000;
 const app = express();
 
+app.use('/main', mainRouter);
+
 app.listen(PORT, () => {
     console.log("Listening in port " + PORT);
 });
-
-mongoConnection();
 
 app.get('/', (req: Request, res: Response) => {
     const date = moment();
     res.json({date});
 });
 
-app.use('/main', mainRouter);
+mongoConnection();
 
 export default app;
