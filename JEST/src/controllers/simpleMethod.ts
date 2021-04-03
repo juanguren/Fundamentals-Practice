@@ -4,7 +4,8 @@ import UserSchema from '../database/config';
 
 const simpleStuff = async(
     req : Request,
-    res: Response
+    res: Response,
+    _next: NextFunction
 ) => {
     try {
         const { name, code } = req.body;
@@ -12,7 +13,10 @@ const simpleStuff = async(
         res.status(201).json({ message: `User ${name} succesfully created`, code });
     } catch (error) {
         const { errors: errorMessage } = error;
-        res.status(400).json({ message: 'Error creating user', errorMessage: errorMessage || error });
+        res.status(400).json({ 
+            message: 'Error creating user',
+            errorMessage: errorMessage || error 
+        });
     }
 };
 
