@@ -8,13 +8,13 @@ const app = express();
 
 app.use('/main', mainRouter);
 
-app.listen(PORT, () => {
-    console.log("Listening in port " + PORT);
-});
-
 app.get('/', (req: Request, res: Response) => {
     const date = moment();
     res.json({date});
+});
+
+app.listen(PORT, async() => {
+    console.log("Listening in port " + PORT);
 });
 
 mongoConnection();

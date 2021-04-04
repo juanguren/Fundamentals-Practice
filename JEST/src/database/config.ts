@@ -1,5 +1,5 @@
 
-import Mongoose, { Schema, Document, model } from 'mongoose';
+import Mongoose, { model } from 'mongoose';
 import { IUser } from './Users/users.types';
 import UserSchema from "./Users/users.schema";
 
