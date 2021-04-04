@@ -25,7 +25,7 @@ const getUsers = async (
     res: Response
 ) => {
     const response = await UserSchema.find();
-    res.json(response);
+    res.status(200).json(response);
 }
 
 export {
