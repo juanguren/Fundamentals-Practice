@@ -4,22 +4,23 @@ import {
 } from '../../controllers/simpleMethod';
 import UserSchema from "../../database/config";
 import  httpMock from 'node-mocks-http';
-import { mockUser } from '../mockData/user';
+import { faultyUser, mockUser } from '../mockData/user';
 
 // * Mocks create method to avoid creating an actual DB record
 // * Overrides the actual .create() with a mock method that will check if the schema can be correctly called
 UserSchema.create = jest.fn();
 
 describe('Simple Middleware Tests', () => {
-    let req: any, res: any;
+    let req: any, res: any, next: any;
     const { name, code } = mockUser;
 
-    beforeEach(() => {
+    beforeEach(() => { // Replaces the need to use async syntax
         req = httpMock.createRequest();
         res = httpMock.createResponse();
+        next = jest.fn();
 
-        req.body = mockUser;
-        simpleStuff(req, res); // When called..
+        req.body = mockUser; // req.body is now our mock
+        simpleStuff(req, res, next); // When called..
     });
     it('Test simple return endpoint', () => {
         expect(typeof simpleStuff).toBe('function');
@@ -37,5 +38,13 @@ describe('Simple Middleware Tests', () => {
         expect(res._getJSONData()).toMatchObject({
             message: `User ${name} succesfully created`, code
         });
+    });
+
+    it('Should correctly handle errors', async () => {
+        try {
+            await simpleStuff(req, res, next);
+        } catch (error) {
+            expect(error).toMatch('error');
+        }
     });
 });

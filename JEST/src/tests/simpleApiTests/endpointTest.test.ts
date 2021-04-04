@@ -1,7 +1,10 @@
 // INTEGRATION TESTS
 import request from 'supertest';
 import app from '../../server';
-import { mockUser } from '../mockData/user';
+import { 
+    mockUser,
+    faultyUser
+} from '../mockData/user';
 
 const endpointURL = '/main/data/create';
 
@@ -16,6 +19,12 @@ describe(`Test ${endpointURL}`, () => {
         expect(response.body).toMatchObject({
             message: `User ${name} succesfully created`, code
         });
+    });
+    it('Should return error in case of missing/invalid/malformed key', async () => {
+        const response = await request(app)
+            .post(endpointURL)
+            .send(faultyUser);
+        expect(response.status).toBe(400);
     });
 });
 
