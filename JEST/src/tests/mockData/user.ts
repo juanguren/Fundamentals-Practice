@@ -11,3 +11,12 @@ export const mockUser = {
     "admin": false,
     "professionType": Number(fkAge) > 65 ? 'RETIRED' : 'PROFESSIONAL'
 }
+
+export const faultyUser = {
+    "code": fk.datatype.uuid(),
+    "name": fk.name.findName(),
+    "age": fkAge,
+    "income": fk.datatype.number()*10,
+    "professionType": Number(fkAge) > 65 ? 'RETIRED' : 'PROFESSIONAL'
+}
+
