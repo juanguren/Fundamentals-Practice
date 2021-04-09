@@ -12,7 +12,7 @@ import { faultyUser, mockUser } from '../mockData/user';
 UserSchema.create = jest.fn();
 UserSchema.find = jest.fn();
 
-describe('Test User retrieval from DB', () => {
+describe('Test User retrieval from DB (GET)', () => {
     let req: any, res: any;
     beforeEach(() => {
         req = httpMock.createRequest();
@@ -23,12 +23,12 @@ describe('Test User retrieval from DB', () => {
     it('Should return a 200', () => {
         expect(res.statusCode).toBe(200);
     });
-
     it('Should call the find() method correctly', () => {
         expect(UserSchema.find).toHaveBeenCalled();
     });
 });
-describe('Test User creation middleware', () => {
+
+describe('Test User creation middleware (POST)', () => {
     let req: any, res: any, next: any;
     const { name, code } = mockUser;
 
