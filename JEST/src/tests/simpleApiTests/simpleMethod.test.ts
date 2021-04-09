@@ -10,6 +10,7 @@ import { faultyUser, mockUser } from '../mockData/user';
 // * Mocks create method to avoid creating an actual DB record
 // * Overrides the actual .create() with a mock method that will check if the schema can be correctly called
 UserSchema.create = jest.fn();
+UserSchema.find = jest.fn();
 
 describe('Test User retrieval from DB', () => {
     let req: any, res: any;
@@ -21,7 +22,11 @@ describe('Test User retrieval from DB', () => {
     });
     it('Should return a 200', () => {
         expect(res.statusCode).toBe(200);
-    })
+    });
+
+    it('Should call the find() method correctly', () => {
+        expect(UserSchema.find).toHaveBeenCalled();
+    });
 });
 describe('Test User creation middleware', () => {
     let req: any, res: any, next: any;
@@ -55,6 +60,7 @@ describe('Test User creation middleware', () => {
 
     it('Should correctly handle errors', async () => {
         try {
+            req.body = faultyUser;
             await simpleStuff(req, res, next);
         } catch (error) {
             expect(error).toMatch('error');
