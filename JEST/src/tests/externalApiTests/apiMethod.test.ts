@@ -18,6 +18,6 @@ describe('Testing API middleware', () => {
         })
     }); 
     it('Should return a 201 status code', () => {
-        expect(res.statusCode).toBe(200); // The method will returna 200
+        expect(res.statusCode).toBe(200); // The method will return a 200
     });
 });
