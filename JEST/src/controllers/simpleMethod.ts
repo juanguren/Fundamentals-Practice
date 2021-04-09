@@ -21,7 +21,7 @@ const simpleStuff = async(
 };
 
 const getUsers = async (
-    req: Request,
+    _req: Request,
     res: Response
 ) => {
     const response = await UserSchema.find();
