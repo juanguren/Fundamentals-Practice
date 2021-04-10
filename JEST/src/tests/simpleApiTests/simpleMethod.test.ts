@@ -32,9 +32,10 @@ describe('Test User retrieval from DB (GET)', () => {
     });
     it('Should return Model response (Users)', async () => {
         (UserSchema.find as jest.Mock).mockReturnValue(mockResponse);
+        await getUsers(req, res);
         expect(res._isEndCalled()).toBeTruthy();
+        expect(res._getJSONData()).toStrictEqual(mockResponse);
     });
-
     it('Should correctly handle errors', async () => {
         const rejected = Promise.reject();
         (UserSchema.find as jest.Mock).mockReturnValue(rejected);
