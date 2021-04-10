@@ -24,8 +24,12 @@ const getUsers = async (
     _req: Request,
     res: Response
 ) => {
-    const response = await UserSchema.find();
-    res.status(200).json(response);
+    try {
+        const response = await UserSchema.find();
+        res.status(200).json(response);
+    } catch (error) {
+        return res.status(400).json({ error: 'There was an error' });
+    }
 }
 
 export {

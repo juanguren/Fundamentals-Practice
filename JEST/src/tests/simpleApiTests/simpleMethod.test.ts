@@ -34,6 +34,16 @@ describe('Test User retrieval from DB (GET)', () => {
         (UserSchema.find as jest.Mock).mockReturnValue(mockResponse);
         expect(res._isEndCalled()).toBeTruthy();
     });
+
+    it('Should correctly handle errors', async () => {
+        const rejected = Promise.reject();
+        (UserSchema.find as jest.Mock).mockReturnValue(rejected);
+        await getUsers(req, res);
+        expect(res.statusCode).toBe(400);
+        expect(res._getJSONData()).toMatchObject({
+            error: 'There was an error'
+        });
+    });
 });
 
 describe('Test User creation middleware (POST)', () => {
@@ -51,21 +61,17 @@ describe('Test User creation middleware (POST)', () => {
     it('Test simple return endpoint', () => {
         expect(typeof simpleStuff).toBe('function');
     });
-
     it('Test that the model is called and filled with appropiate data', () => {
         expect(UserSchema.create).toBeCalledWith(mockUser); // ..schema will include a mockUser-like body
     });
-
     it('Should return a 201 status code', () => {
         expect(res.statusCode).toBe(201); // The method will returna 201
     });
-
     it('Should return a specific JSON object', () => {
         expect(res._getJSONData()).toMatchObject({
             message: `User ${name} succesfully created`, code
         });
     });
-
     it('Should correctly handle errors', async () => {
         try {
             req.body = faultyUser;
