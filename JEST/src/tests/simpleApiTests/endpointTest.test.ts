@@ -32,13 +32,10 @@ describe(`Test ${createUserEndpoint}`, () => {
 describe(`Test ${getUserEndpoint}`, () => {
     it('Should be a GET that freakin works! :D', async () => {
         const response = await request(app)
-            .post(getUserEndpoint);
+            .get(getUserEndpoint);
             
         expect(response.status).toBe(200);
-        expect(response.body).toEqual([expect.objectContaining({
-            admin: expect.any(Boolean)
-            }),
-        ]);
+        expect(response.body).toEqual(expect.any(Array));
     });
 });
 
