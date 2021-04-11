@@ -36,6 +36,8 @@ describe(`Test ${getUserEndpoint}`, () => {
             
         expect(response.status).toBe(200);
         expect(response.body).toEqual(expect.any(Array));
+        expect(Array.isArray(response.body)).toBeTruthy();
+        expect(response.body[0].code).toBeDefined();
     });
 });
 
