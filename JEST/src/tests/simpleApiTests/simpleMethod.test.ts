@@ -5,7 +5,11 @@ import {
 } from '../../controllers/simpleMethod';
 import UserSchema from "../../database/config";
 import  httpMock from 'node-mocks-http';
-import { faultyUser, mockUser } from '../mockData/user';
+import { 
+    faultyUser,
+    mockUser,
+    mockResponse
+} from '../mockData/user';
 
 // * Mocks create method to avoid creating an actual DB record
 // * Overrides the actual .create() with a mock method that will check if the schema can be correctly called
@@ -25,6 +29,10 @@ describe('Test User retrieval from DB (GET)', () => {
     });
     it('Should call the find() method correctly', () => {
         expect(UserSchema.find).toHaveBeenCalled();
+    });
+    it('Should return Model response (Users)', async () => {
+        (UserSchema.find as jest.Mock).mockReturnValue(mockResponse);
+        expect(res._isEndCalled()).toBeTruthy();
     });
 });
 
