@@ -26,9 +26,10 @@ mainRouter.use((
     next();
 });
 mainRouter.get('/shouldI', shouldI);
-mainRouter.post('/data/create', createUser);
 mainRouter.get('/data/get', getUsers);
 mainRouter.get('/data/get/:userCode', getUserById);
+
+mainRouter.post('/data/create', createUser);
 mainRouter.put('/data/update/:userCode', updateUser);
 
 export default mainRouter;
