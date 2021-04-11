@@ -10,6 +10,7 @@ export const mongoConnection = () => {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
+        useFindAndModify: false
     });
 
     // Helpers
