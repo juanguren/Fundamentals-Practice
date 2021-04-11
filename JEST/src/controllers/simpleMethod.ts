@@ -32,7 +32,49 @@ const getUsers = async (
     }
 }
 
+const getUserById = async (
+    req: Request,
+    res: Response
+) => {
+    try {
+        const { userCode } = req.params;
+        const response = await UserSchema.findOne({ code: userCode });
+        if (response) {
+            return res.status(200).json(response);   
+        } else{
+            return res.status(400).json({ 
+                message: `User ${userCode} doesn't exist!` 
+            });
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json(error);
+    }
+}
+
+const updateUser = async (
+    req: Request,
+    res: Response
+) => {
+    try {
+        const { income } = req.body;
+        const { userCode } = req.params;
+        const updateResponse = await UserSchema.findOneAndUpdate({ code: userCode }, { income });   
+        if (updateResponse) {
+            const { name } = updateResponse;
+            res.status(201).json({ 
+                message: `User *${name}* correctly modified`,
+                updateResponse
+            });
+        }
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}
+
 export {
     simpleStuff,
-    getUsers
+    getUsers,
+    getUserById,
+    updateUser
 }

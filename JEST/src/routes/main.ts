@@ -8,7 +8,9 @@ import {
 import {shouldI} from '../controllers/apiMethod';
 import { 
     simpleStuff,
-    getUsers
+    getUsers,
+    getUserById,
+    updateUser
 } from '../controllers/simpleMethod';
 
 const mainRouter = Router();
@@ -22,9 +24,11 @@ mainRouter.use((
     const date = new Date();
     console.log(date);
     next();
-})
+});
 mainRouter.get('/shouldI', shouldI);
 mainRouter.post('/data/create', simpleStuff);
 mainRouter.get('/data/get', getUsers);
+mainRouter.get('/data/get/:userCode', getUserById);
+mainRouter.put('/data/update/:userCode', updateUser);
 
 export default mainRouter;
