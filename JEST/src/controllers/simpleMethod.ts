@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 import UserSchema from '../database/config';
 
-const simpleStuff = async(
+const createUser = async(
     req : Request,
     res: Response,
     _next: NextFunction
@@ -73,7 +73,7 @@ const updateUser = async (
 }
 
 export {
-    simpleStuff,
+    createUser,
     getUsers,
     getUserById,
     updateUser

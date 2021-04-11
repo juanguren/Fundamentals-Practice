@@ -7,7 +7,7 @@ import {
 } from 'express';
 import {shouldI} from '../controllers/apiMethod';
 import { 
-    simpleStuff,
+    createUser,
     getUsers,
     getUserById,
     updateUser
@@ -26,7 +26,7 @@ mainRouter.use((
     next();
 });
 mainRouter.get('/shouldI', shouldI);
-mainRouter.post('/data/create', simpleStuff);
+mainRouter.post('/data/create', createUser);
 mainRouter.get('/data/get', getUsers);
 mainRouter.get('/data/get/:userCode', getUserById);
 mainRouter.put('/data/update/:userCode', updateUser);
