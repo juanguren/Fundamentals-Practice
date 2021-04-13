@@ -1,7 +1,9 @@
 
 import { 
-    simpleStuff,
-    getUsers
+    createUser,
+    getUsers,
+    getUserById,
+    updateUser
 } from '../../controllers/simpleMethod';
 import UserSchema from "../../database/config";
 import  httpMock from 'node-mocks-http';
@@ -15,6 +17,24 @@ import {
 // * Overrides the actual .create() with a mock method that will check if the schema can be correctly called
 UserSchema.create = jest.fn();
 UserSchema.find = jest.fn();
+UserSchema.findOne = jest.fn();
+
+describe('Test get users by Id method', () => {
+    let req: any, res: any;
+    beforeAll( async () => {
+        req = httpMock.createRequest();
+        res = httpMock.createResponse();
+    });
+    it('Should call schemas operation', async () => {
+        req.params.userCode = 'KJ8';
+        await getUserById(req, res);
+        expect(UserSchema.findOne).toBeCalledWith({ code: req.params.userCode });
+    });
+    /*it('Should return a 201', async () => {
+        req.params.userCode = 'KJ8';
+        expect(res.statusCode).toBe(200);
+    });*/
+});
 
 describe('Test User retrieval from DB (GET)', () => {
     let req: any, res: any;
@@ -57,10 +77,10 @@ describe('Test User creation middleware (POST)', () => {
         next = jest.fn();
 
         req.body = mockUser; // req.body is now our mock
-        simpleStuff(req, res, next); // When called..
+        createUser(req, res, next); // When called..
     });
     it('Test simple return endpoint', () => {
-        expect(typeof simpleStuff).toBe('function');
+        expect(typeof createUser).toBe('function');
     });
     it('Test that the model is called and filled with appropiate data', () => {
         expect(UserSchema.create).toBeCalledWith(mockUser); // ..schema will include a mockUser-like body
@@ -76,7 +96,7 @@ describe('Test User creation middleware (POST)', () => {
     it('Should correctly handle errors', async () => {
         try {
             req.body = faultyUser;
-            await simpleStuff(req, res, next);
+            await createUser(req, res, next);
         } catch (error) {
             expect(error).toMatch('error');
         }
