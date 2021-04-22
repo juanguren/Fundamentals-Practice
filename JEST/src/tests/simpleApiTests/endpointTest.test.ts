@@ -9,6 +9,8 @@ import {
 const createUserEndpoint = '/main/data/create';
 const getUserEndpoint = '/main/data/get';
 
+const updateUserEndpoint = '/main/data/update';
+
 describe(`Test ${createUserEndpoint}`, () => {
     it('Should be a POST that creates a DB entry (user)', async () =>{
         const { name, code } = mockUser;
@@ -40,4 +42,14 @@ describe(`Test ${getUserEndpoint}`, () => {
         expect(response.body[0].code).toBeDefined();
     });
 });
+
+describe(`Test ${updateUserEndpoint} by ID`, () => {
+    it('Should be a PUT by ID that works', async () => {
+        const response = await request(app)
+            .put(updateUserEndpoint);
+        expect(response.status).toBe(200);
+    });
+})
+
+
 
