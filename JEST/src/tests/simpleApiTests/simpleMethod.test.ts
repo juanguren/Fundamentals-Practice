@@ -38,6 +38,24 @@ describe('Test get users by Id method', () => {
         expect(res.statusCode).toBe(200);
         expect(res._getJSONData()).toStrictEqual(mockResponseById);
     });
+
+    it('Should correctly return an error status code', async () => {
+        const rejected = Promise.reject();
+        (UserSchema.findOne as jest.Mock).mockReturnValue(rejected);
+        await getUserById(req, res);
+        expect(res.statusCode).toBe(400);
+    });
+    it('Should return a correct error message', async () => {
+        let wrongParam = 'HEY';
+        req.params.userCode = wrongParam;
+        
+        const rejected = Promise.reject();
+        (UserSchema.findOne as jest.Mock).mockReturnValue(rejected);
+        await getUserById(req, res);
+
+        expect(res._isEndCalled()).toBeTruthy();
+        expect(res._isJSON()).toBeTruthy();
+    });
 });
 
 describe('Test User retrieval from DB (GET)', () => {
