@@ -10,7 +10,8 @@ import  httpMock from 'node-mocks-http';
 import { 
     faultyUser,
     mockUser,
-    mockResponse
+    mockResponse,
+    mockResponseById
 } from '../mockData/user';
 
 // * Mocks create method to avoid creating an actual DB record
@@ -21,19 +22,22 @@ UserSchema.findOne = jest.fn();
 
 describe('Test get users by Id method', () => {
     let req: any, res: any;
+    const testParam = 'KJ8';
     beforeAll( async () => {
         req = httpMock.createRequest();
         res = httpMock.createResponse();
+        req.params.userCode = testParam;
     });
     it('Should call schemas operation', async () => {
-        req.params.userCode = 'KJ8';
         await getUserById(req, res);
-        expect(UserSchema.findOne).toBeCalledWith({ code: req.params.userCode });
+        expect(UserSchema.findOne).toBeCalledWith({ code: testParam });
     });
-    /*it('Should return a 201', async () => {
-        req.params.userCode = 'KJ8';
+    it("Should return a correct JSON body and a 200 response code", async() => {
+        (UserSchema.findOne as jest.Mock).mockReturnValue(mockResponseById);
+        await getUserById(req, res);
         expect(res.statusCode).toBe(200);
-    });*/
+        expect(res._getJSONData()).toStrictEqual(mockResponseById);
+    });
 });
 
 describe('Test User retrieval from DB (GET)', () => {
