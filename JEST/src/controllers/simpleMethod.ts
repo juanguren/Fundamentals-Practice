@@ -56,9 +56,9 @@ const updateUser = async (
     req: Request,
     res: Response
 ) => {
+    const { userCode } = req.params;
     try {
         const { income } = req.body;
-        const { userCode } = req.params;
         const updateResponse = await UserSchema.findOneAndUpdate({ code: userCode }, { income });   
         if (updateResponse) {
             const { name } = updateResponse;
@@ -68,7 +68,7 @@ const updateUser = async (
             });
         }
     } catch (error) {
-        res.status(400).json(error);
+        res.status(400).json(`Error updating user ${userCode}`);
     }
 }
 
