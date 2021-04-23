@@ -55,8 +55,12 @@ describe(`Test ${getUserEndpoint}`, () => {
 describe(`Test ${updateUserEndpoint} by ID`, () => {
     it('Should be a PUT by ID that works', async () => {
         const response = await request(app)
-            .put(updateUserEndpoint);
-        expect(response.status).toBe(200);
+            .put(updateUserEndpoint)
+            .query({ userCode: mockResponseById.code })
+            .send({ income: mockResponseById.income });
+
+        expect(response.status).toBe(201);
+        expect(response.body).toContain(mockResponseById);
     });
 })
 
