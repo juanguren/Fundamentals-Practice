@@ -19,8 +19,9 @@ import {
 UserSchema.create = jest.fn();
 UserSchema.find = jest.fn();
 UserSchema.findOne = jest.fn();
+UserSchema.findOneAndUpdate = jest.fn();
 
-describe('Test get users by Id method', () => {
+describe('Test get users by ID method', () => {
     let req: any, res: any;
     const testParam = 'KJ8';
     beforeAll( async () => {
@@ -38,14 +39,13 @@ describe('Test get users by Id method', () => {
         expect(res.statusCode).toBe(200);
         expect(res._getJSONData()).toStrictEqual(mockResponseById);
     });
-
     it('Should correctly return an error status code', async () => {
         const rejected = Promise.reject();
         (UserSchema.findOne as jest.Mock).mockReturnValue(rejected);
         await getUserById(req, res);
         expect(res.statusCode).toBe(400);
     });
-    it('Should return a correct error message', async () => {
+    it('Should catch errors correctly', async () => {
         let wrongParam = 'HEY';
         req.params.userCode = wrongParam;
         
@@ -55,6 +55,17 @@ describe('Test get users by Id method', () => {
 
         expect(res._isEndCalled()).toBeTruthy();
         expect(res._isJSON()).toBeTruthy();
+    });
+    it('Should return a 404 in case no users found (null) + appropiate message', async () => {
+        let wrongParam = 'HEY';
+        req.params.userCode = wrongParam;
+        (UserSchema.findOne as jest.Mock).mockReturnValue(null);
+        await getUserById(req, res);
+
+        expect(res.statusCode).toBe(404);
+        expect(res._getJSONData()).toMatchObject({
+            message: `User ${wrongParam} doesn't exist!`
+        });
     });
 });
 
@@ -122,5 +133,28 @@ describe('Test User creation middleware (POST)', () => {
         } catch (error) {
             expect(error).toMatch('error');
         }
+    });
+});
+
+describe('Test User update (PUT)', () => {
+    let req: any, res: any;
+    let updatedIncome = 76500;
+    let userCode = 'KJ8';
+    beforeEach(() => {
+        req = httpMock.createRequest();
+        res = httpMock.createResponse();
+    });
+
+    it('Should call schemas operation', async () => {
+        await updateUser(req, res);
+        expect(UserSchema.findOneAndUpdate).toBeCalled();
+    });
+
+    it('Should correctly update user and return message', async () => {
+        req.body.income = updatedIncome;
+        req.params.userCode = userCode;
+
+        await updateUser(req, res);
+        expect(res.statusCode).toBe(201);
     });
 });

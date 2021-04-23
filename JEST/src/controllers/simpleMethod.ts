@@ -42,7 +42,7 @@ const getUserById = async (
         if (response) {
             return res.status(200).json(response);   
         } else{
-            return res.status(400).json({ 
+            return res.status(404).json({ 
                 message: `User ${userCode} doesn't exist!` 
             });
         }
