@@ -3,7 +3,8 @@ import request from 'supertest';
 import app from '../../server';
 import { 
     mockUser,
-    faultyUser
+    faultyUser,
+    mockResponseById
 } from '../mockData/user';
 
 const createUserEndpoint = '/main/data/create';
@@ -40,6 +41,14 @@ describe(`Test ${getUserEndpoint}`, () => {
         expect(response.body).toEqual(expect.any(Array));
         expect(Array.isArray(response.body)).toBeTruthy();
         expect(response.body[0].code).toBeDefined();
+    });
+    it('Should also work when including the query parameter (code)', async () => {
+        const response = await request(app)
+            .get(getUserEndpoint)
+            .query({ userCode: mockResponseById.code });
+        
+        expect(response.status).toBe(200);
+        expect(response.body.income).toBe(mockResponseById.income);
     });
 });
 
