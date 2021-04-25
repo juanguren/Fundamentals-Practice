@@ -1,4 +1,4 @@
-import { shouldI } from '../controllers/apiMethod';
+import { shouldI } from '../../controllers/apiMethod';
 import  httpMock from 'node-mocks-http';
 
 describe('Testing API middleware', () => {

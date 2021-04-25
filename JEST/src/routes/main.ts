@@ -7,8 +7,11 @@ import {
 } from 'express';
 import {shouldI} from '../controllers/apiMethod';
 import { 
-    simpleStuff,
-    getUsers
+    createUser,
+    getUsers,
+    getUserById,
+    updateUser,
+    deleteUser
 } from '../controllers/simpleMethod';
 import LogSchema from '../database/Logs/logs.model';
 
@@ -20,17 +23,17 @@ mainRouter.use( async (
     res: Response,
     next: NextFunction
 ) => {
-    try {
-        const date = new Date();
-        const route = req.originalUrl;
-        await LogSchema.create({ route, date });
-        next();
-    } catch (error) {
-        return res.status(400).json(error);
-    }
-})
+    const date = new Date();
+    console.log(date);
+    next();
+});
 mainRouter.get('/shouldI', shouldI);
-mainRouter.post('/data/create', simpleStuff);
-mainRouter.get('/data/get/:code', getUsers);
+mainRouter.get('/data/get', getUsers);
+mainRouter.get('/data/get/:userCode', getUserById);
+
+mainRouter.post('/data/create', createUser);
+mainRouter.put('/data/update/:userCode', updateUser);
+
+mainRouter.delete('/data/delete/:userCode', deleteUser);
 
 export default mainRouter;
