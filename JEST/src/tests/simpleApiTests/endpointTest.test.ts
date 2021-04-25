@@ -9,8 +9,8 @@ import {
 
 const createUserEndpoint = '/main/data/create';
 const getUserEndpoint = '/main/data/get';
-
 const updateUserEndpoint = '/main/data/update';
+const deleteUserEndpoint = 'main/data/delete';
 
 describe(`Test ${createUserEndpoint}`, () => {
     it('Should be a POST that creates a DB entry (user)', async () =>{
@@ -62,7 +62,24 @@ describe(`Test ${updateUserEndpoint} by ID`, () => {
         expect(response.status).toBe(201);
         expect(response.body).toContain(mockResponseById);
     });
-})
+});
+
+describe(`Test ${deleteUserEndpoint}`, async () => {
+    const getUser = await request(app)
+    .get(getUserEndpoint);
+    const testUserCode : string = getUser.body[0].code;
+
+    it('Should call endpoint correctly and return correct info', async () => {
+        const response = await request(app)
+            .get(deleteUserEndpoint)
+            .query({ userCode: testUserCode });
+        
+        expect(response.status).toBe(204);
+        expect(response.body).toMatchObject({
+            message: `User ${testUserCode} successfully deleted`
+        });
+    });
+});
 
 
 
