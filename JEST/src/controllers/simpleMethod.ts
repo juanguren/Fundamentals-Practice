@@ -72,9 +72,33 @@ const updateUser = async (
     }
 }
 
+const deleteUser = async (
+    req: Request,
+    res: Response
+) => {
+    const { userCode } = req.params;
+    try {
+        if (userCode) {
+            const deleteResponse = await UserSchema.findOneAndDelete({ code: userCode });
+            if (deleteResponse) {
+                res.status(200 /**deleted code... */).json({
+                    message: `User ${userCode} successfully deleted`
+                });
+            } else{
+                res.status(404).json({ message: "User doesn't exist" });
+            }
+        } else{
+            res.status(400).json({ message: "Please provide a userCode" });
+        }
+    } catch (error) {
+        res.json(error);
+    }
+}
+
 export {
     createUser,
     getUsers,
     getUserById,
-    updateUser
+    updateUser,
+    deleteUser
 }

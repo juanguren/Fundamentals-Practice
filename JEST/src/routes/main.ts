@@ -10,7 +10,8 @@ import {
     createUser,
     getUsers,
     getUserById,
-    updateUser
+    updateUser,
+    deleteUser
 } from '../controllers/simpleMethod';
 
 const mainRouter = Router();
@@ -31,5 +32,7 @@ mainRouter.get('/data/get/:userCode', getUserById);
 
 mainRouter.post('/data/create', createUser);
 mainRouter.put('/data/update/:userCode', updateUser);
+
+mainRouter.delete('/data/delete/:userCode', deleteUser);
 
 export default mainRouter;
