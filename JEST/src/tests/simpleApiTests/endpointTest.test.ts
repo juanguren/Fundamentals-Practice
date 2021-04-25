@@ -50,6 +50,13 @@ describe(`Test ${getUserEndpoint}`, () => {
         expect(response.status).toBe(200);
         expect(response.body.income).toBe(mockResponseById.income);
     });
+    it('Should work also when the provided code is wrong', async () => {
+        const response = await request(app)
+            .get(getUserEndpoint)
+            .query({ userCode: 'HEYY' });
+
+        expect(response.status).toBe(404);
+    });
 });
 
 describe(`Test ${updateUserEndpoint} by ID`, () => {
