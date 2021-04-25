@@ -151,7 +151,7 @@ describe('Test User update (PUT)', () => {
     });
 
     it('Should correctly update user and return message', async () => {
-        req.body.income = updatedIncome;
+        req.body = { income: updatedIncome };
         req.params.userCode = userCode;
 
         await updateUser(req, res);

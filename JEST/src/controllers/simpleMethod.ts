@@ -81,7 +81,7 @@ const deleteUser = async (
         if (userCode) {
             const deleteResponse = await UserSchema.findOneAndDelete({ code: userCode });
             if (deleteResponse) {
-                res.status(200 /**deleted code... */).json({
+                res.status(204).json({
                     message: `User ${userCode} successfully deleted`
                 });
             } else{
