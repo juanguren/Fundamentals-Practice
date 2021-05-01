@@ -5,7 +5,7 @@ import {
     getUserById,
     updateUser
 } from '../../controllers/simpleMethod';
-import UserSchema from "../../database/config";
+import UserSchema from "../../database//Users/users.model";
 import  httpMock from 'node-mocks-http';
 import { 
     faultyUser,
@@ -140,6 +140,12 @@ describe('Test User update (PUT)', () => {
     let req: any, res: any;
     let updatedIncome = 76500;
     let userCode = 'KJ8';
+    const name = 'Juan';
+
+    const correctPutMessage = {
+        message: `User *${name}* correctly modified`,
+        updateResponse: mockResponseById
+    }
     beforeEach(() => {
         req = httpMock.createRequest();
         res = httpMock.createResponse();
@@ -151,10 +157,20 @@ describe('Test User update (PUT)', () => {
     });
 
     it('Should correctly update user and return message', async () => {
-        req.body = { income: updatedIncome };
+        req.body.income = updatedIncome;
         req.params.userCode = userCode;
-
+        
         await updateUser(req, res);
+        expect(UserSchema.findOneAndUpdate).toHaveBeenCalledWith({ code: userCode }, { income: updatedIncome });
+    });
+
+    it('Should call schemas operation', async () => {
+        req.body.income = updatedIncome;
+        req.params.userCode = userCode;
+        (UserSchema.findOneAndUpdate as jest.Mock).mockReturnValue(mockResponseById);
+        await updateUser(req, res);
+
+        expect(res._getJSONData()).toStrictEqual(correctPutMessage);
         expect(res.statusCode).toBe(201);
     });
 });
