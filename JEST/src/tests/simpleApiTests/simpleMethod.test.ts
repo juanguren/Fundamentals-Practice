@@ -140,6 +140,7 @@ describe('Test User update (PUT)', () => {
     let req: any, res: any;
     let updatedIncome = 76500;
     let userCode = 'KJ8';
+    let wrongCode = 'HEY';
     const name = 'Juan';
 
     const correctPutMessage = {
@@ -172,5 +173,16 @@ describe('Test User update (PUT)', () => {
 
         expect(res._getJSONData()).toStrictEqual(correctPutMessage);
         expect(res.statusCode).toBe(201);
+    });
+    it('Should correctly handle errors', async () => {
+        req.params.userCode = 'HEY';
+        const rejected = Promise.reject();
+        (UserSchema.findOneAndUpdate as jest.Mock).mockReturnValue(rejected);
+        await updateUser(req, res);
+
+        expect(res.statusCode).toBe(400);
+        expect(res._getJSONData()).toMatchObject({
+            message: `Error updating user ${wrongCode}`
+        });
     });
 });
