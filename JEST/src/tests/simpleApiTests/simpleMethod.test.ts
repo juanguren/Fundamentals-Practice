@@ -6,7 +6,7 @@ import {
     updateUser,
     deleteUser
 } from '../../controllers/simpleMethod';
-import UserSchema from "../../database//Users/users.model";
+import UserSchema from "../../database/Users/users.model";
 import  httpMock from 'node-mocks-http';
 import { 
     faultyUser,
@@ -17,11 +17,13 @@ import {
 
 // * Mocks create method to avoid creating an actual DB record
 // * Overrides the actual .create() with a mock method that will check if the schema can be correctly called
-UserSchema.create = jest.fn();
+/*UserSchema.create = jest.fn();
 UserSchema.find = jest.fn();
 UserSchema.findOne = jest.fn();
 UserSchema.findOneAndUpdate = jest.fn();
-UserSchema.findOneAndDelete = jest.fn();
+UserSchema.findOneAndDelete = jest.fn();*/
+
+jest.mock("../../database/Users/users.model"); // * Mocking the entire model
 
 describe('Test get users by ID method', () => {
     let req: any, res: any;
@@ -29,15 +31,17 @@ describe('Test get users by ID method', () => {
     beforeAll( async () => {
         req = httpMock.createRequest();
         res = httpMock.createResponse();
-        req.params.userCode = testParam;
     });
     it('Should call schemas operation', async () => {
+        req.params.userCode = testParam;
         await getUserById(req, res);
         expect(UserSchema.findOne).toBeCalledWith({ code: testParam });
     });
     it("Should return a correct JSON body and a 200 response code", async() => {
+        req.params.userCode = testParam;
         (UserSchema.findOne as jest.Mock).mockReturnValue(mockResponseById);
         await getUserById(req, res);
+
         expect(res.statusCode).toBe(200);
         expect(res._getJSONData()).toStrictEqual(mockResponseById);
     });
@@ -201,6 +205,11 @@ describe('Test User deletion (DELETE)', () => {
     it('Should call delete schema operation', async () => {
         await deleteUser(req, res);
         expect(UserSchema.findOneAndDelete).toBeCalled();
+    });
+    it('Should return a correct status code', async () => {
+        req.params.userCode = userCode;
+        await deleteUser(req, res);
+        expect(res.statusCode).toBe(204);
     });
     it('Should fail if theres no param', async () => {
         req.params.userCode = null;
