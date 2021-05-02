@@ -204,7 +204,9 @@ describe('Test User deletion (DELETE)', () => {
     });
     it('Should call delete schema operation', async () => {
         await deleteUser(req, res);
+
         expect(UserSchema.findOneAndDelete).toBeCalled();
+        expect(UserSchema.findOneAndDelete).toBeCalledWith({ code: userCode });
     });
     it('Should return a correct status code', async () => {
         req.params.userCode = userCode;
