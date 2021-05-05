@@ -15,9 +15,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.findByCode = exports.findOrCreate = void 0;
 const users_model_1 = __importDefault(require("./users.model"));
-const findOrCreate = (data, userId) => __awaiter(void 0, void 0, void 0, function* () {
+const findOrCreate = (data, userCode) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const record = yield users_model_1.default.findOne({ id: userId });
+        const record = yield users_model_1.default.findOne({ id: userCode });
         if (record) {
             return record;
         }
@@ -30,9 +30,9 @@ const findOrCreate = (data, userId) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.findOrCreate = findOrCreate;
-const findByCode = (model, userCode) => __awaiter(void 0, void 0, void 0, function* () {
+const findByCode = (userCode) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return yield users_model_1.default.find({ id: userCode });
+        return yield users_model_1.default.findOne({ code: userCode });
     }
     catch (error) {
         return error;

@@ -12,23 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mongoConnection = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const mongoConnection = () => {
-    const URI = "mongodb://localhost:27017/users_jest";
-    mongoose_1.default.connect(URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false
-    });
-    // Helpers
-    const database = mongoose_1.default.connection;
-    database.once("open", () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("Connected to database");
+const apiMethod_1 = require("../../controllers/apiMethod");
+const node_mocks_http_1 = __importDefault(require("node-mocks-http"));
+describe('Testing API middleware', () => {
+    let req, res;
+    beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
+        req = node_mocks_http_1.default.createRequest();
+        res = node_mocks_http_1.default.createResponse();
+        yield apiMethod_1.shouldI(req, res);
     }));
-    database.on("error", () => {
-        console.log("Error connecting to database");
+    it('Should return correct API response', () => __awaiter(void 0, void 0, void 0, function* () {
+        expect(res._getJSONData()).toMatchObject({
+            shouldIDeploy: {
+                message: expect.any(String),
+                shouldI: expect.any(Boolean),
+                myResponse: expect.any(String)
+            }
+        });
+    }));
+    it('Should return a 201 status code', () => {
+        expect(res.statusCode).toBe(200); // The method will return a 200
     });
-};
-exports.mongoConnection = mongoConnection;
+});

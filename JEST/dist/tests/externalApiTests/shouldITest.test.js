@@ -12,23 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mongoConnection = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
-const mongoConnection = () => {
-    const URI = "mongodb://localhost:27017/users_jest";
-    mongoose_1.default.connect(URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false
-    });
-    // Helpers
-    const database = mongoose_1.default.connection;
-    database.once("open", () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("Connected to database");
+// INTEGRATION TESTS
+const supertest_1 = __importDefault(require("supertest"));
+const server_1 = __importDefault(require("../../server"));
+const endpointURL = '/main/shouldI';
+describe(`Test ${endpointURL}`, () => {
+    it('Should make a good GET', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield supertest_1.default(server_1.default)
+            .get(endpointURL);
+        expect(response.status).toBe(200);
     }));
-    database.on("error", () => {
-        console.log("Error connecting to database");
-    });
-};
-exports.mongoConnection = mongoConnection;
+});
