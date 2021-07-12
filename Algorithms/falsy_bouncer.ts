@@ -5,4 +5,4 @@ const bouncer = (array: Array<any>): Array<string | number> => {
   return noFalsy;
 };
 
-bouncer([7, "ate", "", false, 9]);
+bouncer([7, "ate", "", false, 9, NaN, true, "HEY"]);
