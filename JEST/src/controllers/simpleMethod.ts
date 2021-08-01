@@ -85,9 +85,7 @@ const deleteUser = async (
         if (userCode) {
             const deleteResponse = await UserSchema.findOneAndDelete({ code: userCode });
             if (deleteResponse) {
-                res.status(204).json({
-                    message: `User ${userCode} successfully deleted`
-                });
+                res.status(204).send();
             } else{
                 res.status(404).json({ message: "User doesn't exist" });
             }
