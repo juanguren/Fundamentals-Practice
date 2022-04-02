@@ -1,8 +1,24 @@
-const bouncer = (array: Array<any>): Array<string | number> => {
-  const noFalsy = array.filter((element: any) => {
-    if (element) return element;
+// Remove all falsy values from an array:
+
+function bouncerOne(values: any[]) {
+  const truthyStack = [];
+  values.forEach((element: any) => {
+    if (element) truthyStack.push(element);
   });
-  return noFalsy;
+
+  return truthyStack;
+}
+
+bouncerOne([7, "ate", "", false, 9, NaN, true, "HEY"]);
+
+// **
+
+const bouncerTwo = (values: any[]) => {
+  const condition = (value: any) => {
+    if (value) return value;
+  };
+
+  return values.filter(condition);
 };
 
-bouncer([7, "ate", "", false, 9, NaN, true, "HEY"]);
+bouncerTwo([7, "ate", "", false, 9, NaN, true, "HEY"]);
