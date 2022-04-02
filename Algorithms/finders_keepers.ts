@@ -4,13 +4,8 @@
  *  func(x) is true. If no element passes the test, return undefined.
  */
 
-const findElement = (numberArray: Array<number>, method: CallableFunction) => {
-  const filtered = numberArray.filter((number): Array<number | any> => {
-    return method(number);
-  });
-  if (filtered[0]) return filtered[0];
+function findElement(collection: number[], truthTest: any) {
+  return collection.find(truthTest);
+}
 
-  return undefined;
-};
-
-findElement([1, 3, 5, 9], (value: number) => value % 2 === 0);
+findElement([1, 2, 3, 4], (num: number) => num % 2 === 0);
