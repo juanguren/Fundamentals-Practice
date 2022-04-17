@@ -1,4 +1,12 @@
-import { getUser, largestOfFour, multiplyByX } from "../logic/sync-methods";
+import Hero, {
+  getUser,
+  largestOfFour,
+  multiplyByX,
+  createNewHero,
+  getHeroInventory,
+  includeInInventory,
+} from "../logic/sync-methods";
+import { IHero } from "../types/types";
 const faker = require("faker");
 
 describe("Test some random sync methods", () => {
@@ -46,6 +54,34 @@ describe("Test some random sync methods", () => {
       expect(response).toEqual(expect.any(Object));
       expect(response).toHaveProperty("drinkingStatus");
       expect(response.drinkingStatus).toStrictEqual(expect.any(Boolean));
+    });
+  });
+  describe("Hero Class", () => {
+    const mockName = faker.name.firstName();
+    const newHero = createNewHero(mockName);
+    it("Should create and return a new object of the instance Hero", () => {
+      const expected: IHero = {
+        id: expect.any(String),
+        name: mockName,
+        level: 1,
+        inventory: { items: [] },
+      };
+
+      expect(newHero).toBeInstanceOf(Hero);
+      expect(newHero).toEqual(expected);
+    });
+    it("Should correctly retrieve the Heros inventory", () => {
+      const getHeroInventoryResponse = getHeroInventory(newHero);
+
+      expect(getHeroInventoryResponse).toHaveProperty("items");
+      expect(getHeroInventoryResponse.items).toEqual([]);
+    });
+    it("Should correctly include new items to a Heros inventory", () => {
+      const mockItem = faker.commerce.product();
+      const includeInInventoryResponse = includeInInventory(newHero, mockItem);
+
+      expect(includeInInventoryResponse).toHaveProperty("items");
+      expect(includeInInventoryResponse.items).toContain(mockItem);
     });
   });
 });

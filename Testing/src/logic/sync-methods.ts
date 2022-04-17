@@ -1,3 +1,5 @@
+import { nanoid } from "nanoid";
+import { IHero } from "../types/types";
 const faker = require("faker");
 
 export const multiplyByX = (array: any[], multiplier: number): any => {
@@ -19,7 +21,7 @@ export const largestOfFour = (values: any[]) => {
   return largestList;
 };
 
-export interface IUser {
+interface IUser {
   name: string;
   age: number;
   ssn: string;
@@ -38,3 +40,31 @@ export const getUser = (): IUser => {
     drinkingStatus: getDrinkingStatus(age),
   };
 };
+
+export default class Hero implements IHero {
+  public id: string;
+  public name: string;
+  public level: number;
+  public inventory: any;
+
+  constructor(_name: string) {
+    this.name = _name;
+    this.id = nanoid();
+    this.level = 1;
+    this.inventory = { items: [] };
+  }
+
+  getInventory() {
+    return this.inventory;
+  }
+
+  includeInInventory(item: any) {
+    this.inventory.items.push(item);
+    return this.getInventory();
+  }
+}
+
+export const createNewHero = (name: string): Hero => new Hero(name);
+export const getHeroInventory = (hero: Hero) => hero.getInventory();
+export const includeInInventory = (hero: Hero, item: any) =>
+  hero.includeInInventory(item);
