@@ -7,7 +7,8 @@ export default class Hero implements IHero {
   public level: number;
   public inventory: Inventory;
 
-  constructor() {
+  constructor(_name: string) {
+    this.name = _name;
     this.id = nanoid();
     this.level = 1;
     this.inventory = { food: [], weapons: [] };

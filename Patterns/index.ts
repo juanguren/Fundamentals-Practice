@@ -2,7 +2,7 @@ import Hero from "./src/decorator/game-inventory/Hero";
 import Decorator from "./src/decorator/game-inventory/game-decorators";
 import { itemType, Weapon } from "./src/decorator/game-inventory/types";
 
-const hero = new Hero();
+const hero = new Hero("Parcival");
 console.log(hero);
 
 const newWeapon: Weapon = { name: "Orb of ossobox", active: true, damage: 9 };
