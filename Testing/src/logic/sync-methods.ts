@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { IHero } from "../types/types";
+import { IHero, IUser } from "../types/types";
 const faker = require("faker");
 
 export const multiplyByX = (array: any[], multiplier: number): any => {
@@ -20,13 +20,6 @@ export const largestOfFour = (values: any[]) => {
   }
   return largestList;
 };
-
-interface IUser {
-  name: string;
-  age: number;
-  ssn: string;
-  drinkingStatus: boolean;
-}
 
 export const getDrinkingStatus = (age: number) => age >= 18;
 
