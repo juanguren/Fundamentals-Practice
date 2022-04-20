@@ -1,12 +1,9 @@
 import Hero from "./Hero";
 import { Food, itemType, Weapon } from "./types";
 
-const addItems = (hero: Hero, elements: (Weapon | Food)[]): Hero => {
-  const itemSelector = {
-    food: hero.inventory.food,
-    weapons: hero.inventory.weapons,
-  };
+// ! TODO: Add support for many Item types, not just Weapons and Food
 
+const addItems = (hero: Hero, elements: (Weapon | Food)[]): Hero => {
   elements.forEach((item) => {
     if ((item as Weapon).damage) {
       const newWeapon = item as Weapon;
