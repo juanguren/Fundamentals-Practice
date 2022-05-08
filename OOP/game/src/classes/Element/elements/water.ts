@@ -9,8 +9,8 @@ export class Water implements IElement {
 
   constructor() {
     this.attacks = {
-      scorchingSun(level: number): number {
-        return level * 2.5;
+      flowingLeviathan(level: number): number {
+        return level * 2.8;
       },
     };
   }

@@ -9,8 +9,8 @@ export class Earth implements IElement {
 
   constructor() {
     this.attacks = {
-      scorchingSun(level: number): number {
-        return level * 2.5;
+      ragingGolem(level: number): number {
+        return level * 3;
       },
     };
   }

@@ -9,8 +9,8 @@ export class Air implements IElement {
 
   constructor() {
     this.attacks = {
-      scorchingSun(level: number): number {
-        return level * 2.5;
+      expansiveHeavens(level: number): number {
+        return level * 3;
       },
     };
   }
