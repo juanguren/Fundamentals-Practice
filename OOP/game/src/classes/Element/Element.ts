@@ -8,7 +8,7 @@ import { ElementFactory } from './Element-Factory';
 export class Element implements IElement {
   class: ElementType;
   attacks: IElementAttacks[ElementType] | undefined;
-  elementInstance?: any;
+  elementInstance: IElement;
 
   constructor(_class: ElementType) {
     this.class = _class;
