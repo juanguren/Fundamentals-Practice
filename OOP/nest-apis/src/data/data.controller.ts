@@ -12,11 +12,6 @@ import { DataService } from './data.service';
 import { CreateDatumDto } from './dto/create-datum.dto';
 import { MyValidation } from './validation-pipes';
 
-enum ValidQueries {
-  KEY = 'KEY',
-  VALUE = 'VALUE',
-}
-
 @Controller('data')
 export class DataController {
   constructor(private readonly dataService: DataService) {}

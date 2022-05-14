@@ -41,12 +41,11 @@ export class DataService {
       return recordResponse;
     } catch (error) {
       const { status, statusText } = error.response;
-      return { message: statusText, status };
+      return { message: statusText, status, error };
     }
   }
 
   async createMany(amount: number) {
-    const { GLOBAL_ARRAY_KEY } = process.env;
     try {
       const requests = [];
       const itemData = [];
@@ -58,11 +57,20 @@ export class DataService {
       }
       const resolved = await Promise.all(requests);
       resolved.forEach((item) => itemData.push(item.data));
-      this.items.push(...itemData);
 
-      console.log(GLOBAL_ARRAY_KEY);
+      const dataObject: CreateRecordDTO = {
+        content: {
+          ...itemData,
+        },
+        instructions: {
+          keyName: 'key_many',
+        },
+      };
 
-      return this.items;
+      const recordResponse = await globalArrayService.createRecord(dataObject);
+      recordResponse.object = dataObject;
+
+      return recordResponse;
     } catch (error) {
       return error;
     }
