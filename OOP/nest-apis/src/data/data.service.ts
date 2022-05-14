@@ -3,6 +3,7 @@ import { CreateDatumDto } from './dto/create-datum.dto';
 import globalArrayService from 'src/services/globalArray.service';
 
 import axios from 'axios';
+import { CreateRecordDTO } from 'src/services/globalArray-types';
 
 @Injectable()
 export class DataService {
@@ -17,17 +18,27 @@ export class DataService {
     }
   }
 
-  async createOne(id: string, query) {
+  async createOne(id: string, keyName: string) {
     try {
       const response = await axios.get(
         `https://jsonplaceholder.typicode.com/todos/${id}`,
       );
       const newItem = response.data;
-      newItem.extra = query;
       this.items.push(newItem);
 
-      const { id: itemId } = newItem;
-      return { message: `Data was found and saved with ID of ${itemId}` };
+      const dataObject: CreateRecordDTO = {
+        content: {
+          ...newItem,
+        },
+        instructions: {
+          keyName,
+        },
+      };
+
+      const recordResponse = await globalArrayService.createRecord(dataObject);
+      recordResponse.object = dataObject;
+
+      return recordResponse;
     } catch (error) {
       const { status, statusText } = error.response;
       return { message: statusText, status };

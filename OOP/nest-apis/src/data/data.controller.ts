@@ -42,11 +42,8 @@ export class DataController {
   // * Via API
   // ! Example of a custom-built validation pipe (For Query params)
   @Post('/create/:id')
-  async createOne(
-    @Param('id') id: string,
-    @Query('query', MyValidation) query: string,
-  ) {
-    return this.dataService.createOne(id, query);
+  async createOne(@Param('id') id: string, @Query('keyName') keyName: string) {
+    return this.dataService.createOne(id, keyName);
   }
 
   @Put('/')

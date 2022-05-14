@@ -8,6 +8,12 @@ interface Instructions {
   overwrite?: boolean;
 }
 
+export interface CreatedRecordDTO {
+  message: string;
+  keyName: string;
+  object: CreateRecordDTO;
+}
+
 export interface GetRecordDTO {
   data: object;
 }
