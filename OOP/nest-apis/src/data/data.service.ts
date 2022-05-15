@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateDatumDto } from './dto/create-datum.dto';
 import globalArrayService from 'src/services/globalArray.service';
 
 import axios from 'axios';
 import { CreateRecordDTO } from 'src/services/globalArray-types';
+import { returnRecordObject } from 'src/utils/util';
 
 @Injectable()
 export class DataService {
@@ -26,14 +27,7 @@ export class DataService {
       const newItem = response.data;
       this.items.push(newItem);
 
-      const dataObject: CreateRecordDTO = {
-        content: {
-          ...newItem,
-        },
-        instructions: {
-          keyName,
-        },
-      };
+      const dataObject = returnRecordObject(newItem, keyName);
 
       const recordResponse = await globalArrayService.createRecord(dataObject);
       recordResponse.object = dataObject;
@@ -58,17 +52,16 @@ export class DataService {
       const resolved = await Promise.all(requests);
       resolved.forEach((item) => itemData.push(item.data));
 
-      const dataObject: CreateRecordDTO = {
-        content: {
-          ...itemData,
-        },
-        instructions: {
-          keyName: 'key_many',
-        },
-      };
+      const dataObject = returnRecordObject(itemData, 'key_test_many2');
 
-      const recordResponse = await globalArrayService.createRecord(dataObject);
-      recordResponse.object = dataObject;
+      const recordResponse = (await globalArrayService.createRecord(
+        dataObject,
+      )) as CreateRecordDTO | any;
+
+      if (recordResponse.isAxiosError) {
+        const message = recordResponse.response.data;
+        throw new BadRequestException(message);
+      }
 
       return recordResponse;
     } catch (error) {
