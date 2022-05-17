@@ -16,15 +16,15 @@ import { MyValidation } from './validation-pipes';
 export class DataController {
   constructor(private readonly dataService: DataService) {}
 
-  @Get()
-  getAllItems() {
-    return this.dataService.getAllItems();
-  }
-
   // * Via req.body
-  @Post()
+  /* @Post()
   create(@Body() createDatumDto: CreateDatumDto) {
     return this.dataService.create(createDatumDto);
+  } */
+
+  @Get(':keyName')
+  async getOneItem(@Param('keyName') keyName: string) {
+    return this.dataService.getOneItem(keyName);
   }
 
   // * Via API
@@ -40,7 +40,4 @@ export class DataController {
   async createOne(@Param('id') id: string, @Query('keyName') keyName: string) {
     return this.dataService.createOne(id, keyName);
   }
-
-  @Put('/')
-  getOneItem(@Query('id', MyValidation) query: string) {}
 }

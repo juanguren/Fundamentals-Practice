@@ -7,5 +7,6 @@ export const returnRecordObject = (
   content: { data },
   instructions: {
     keyName,
+    overwrite: true,
   },
 });

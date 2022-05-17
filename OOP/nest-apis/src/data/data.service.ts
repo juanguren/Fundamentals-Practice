@@ -8,27 +8,14 @@ import { returnRecordObject } from 'src/utils/util';
 
 @Injectable()
 export class DataService {
-  items = [];
-
-  create(createDatumDto: CreateDatumDto) {
-    try {
-      this.items.push(createDatumDto);
-      return { items: this.items };
-    } catch (error) {
-      return error;
-    }
-  }
-
   async createOne(id: string, keyName: string) {
     try {
       const response = await axios.get(
         `https://jsonplaceholder.typicode.com/todos/${id}`,
       );
       const newItem = response.data;
-      this.items.push(newItem);
 
       const dataObject = returnRecordObject(newItem, keyName);
-
       const recordResponse = await globalArrayService.createRecord(dataObject);
       recordResponse.object = dataObject;
 
@@ -69,7 +56,7 @@ export class DataService {
     }
   }
 
-  getAllItems(): Array<any> {
-    return this.items;
+  async getOneItem(keyName: string): Promise<any[]> {
+    return globalArrayService.getRecord(keyName);
   }
 }
