@@ -3,7 +3,7 @@ import { CreateDatumDto } from './dto/create-datum.dto';
 import globalArrayService from 'src/services/globalArray.service';
 
 import axios from 'axios';
-import { CreateRecordDTO } from 'src/services/globalArray-types';
+import { CreateRecordDTO, GetRecordDTO } from 'src/services/globalArray-types';
 import { returnRecordObject } from 'src/utils/util';
 
 @Injectable()
@@ -15,7 +15,8 @@ export class DataService {
       );
       const newItem = response.data;
 
-      const dataObject = returnRecordObject(newItem, keyName);
+      const shouldOverwrite = false;
+      const dataObject = returnRecordObject(newItem, keyName, shouldOverwrite);
       const recordResponse = await globalArrayService.createRecord(dataObject);
       recordResponse.object = dataObject;
 
@@ -39,7 +40,12 @@ export class DataService {
       const resolved = await Promise.all(requests);
       resolved.forEach((item) => itemData.push(item.data));
 
-      const dataObject = returnRecordObject(itemData, 'key_test_many2');
+      const shouldOverwrite = false;
+      const dataObject = returnRecordObject(
+        itemData,
+        'key_test_many2',
+        shouldOverwrite,
+      );
 
       const recordResponse = (await globalArrayService.createRecord(
         dataObject,
@@ -56,7 +62,21 @@ export class DataService {
     }
   }
 
-  async getOneItem(keyName: string): Promise<any[]> {
+  async getOneItem(keyName: string): Promise<GetRecordDTO> {
     return globalArrayService.getRecord(keyName);
+  }
+
+  async updateOneItem(keyName: string, id: string) {
+    try {
+      const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/todos/${id}`,
+      );
+      const newItem = response.data as object;
+
+      const shouldOverwrite = true;
+      const dataObject = returnRecordObject(newItem, keyName, shouldOverwrite);
+
+      return globalArrayService.updateRecord(dataObject);
+    } catch (error) {}
   }
 }

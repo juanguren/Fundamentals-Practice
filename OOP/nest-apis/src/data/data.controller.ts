@@ -40,4 +40,12 @@ export class DataController {
   async createOne(@Param('id') id: string, @Query('keyName') keyName: string) {
     return this.dataService.createOne(id, keyName);
   }
+
+  @Put(':keyName')
+  async updateOne(
+    @Param('keyName') keyName: string,
+    @Query('randomId') randomId: string,
+  ) {
+    return this.dataService.updateOneItem(keyName, randomId);
+  }
 }
