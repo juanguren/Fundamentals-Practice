@@ -24,7 +24,7 @@ class GlobalArray {
     }
   }
 
-  async getRecord(keyName: string) /*Promise<GetRecordDTO> */ {
+  async getRecord(keyName: string): Promise<GetRecordDTO> {
     try {
       const instance = (await this.getInstance()).get(`/${keyName}`);
       const response = (await instance).data;
@@ -35,7 +35,12 @@ class GlobalArray {
     }
   }
 
-  async updateRecord(body: CreateRecordDTO) /*Promise<number>  */ {}
+  async updateRecord(item: object): Promise<object> {
+    const instance = (await this.getInstance()).post('/', item);
+    const response = (await instance).data;
+
+    return response;
+  }
 
   async deleteRecord(keyName: string) /*Promise<{ message: string }>*/ {}
 
