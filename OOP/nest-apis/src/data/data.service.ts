@@ -79,4 +79,8 @@ export class DataService {
       return globalArrayService.updateRecord(dataObject);
     } catch (error) {}
   }
+
+  async deleteOneItem(keyName: string) {
+    return globalArrayService.deleteRecord(keyName);
+  }
 }

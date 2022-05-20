@@ -2,15 +2,13 @@ import {
   Controller,
   Get,
   Post,
-  Body,
   Param,
   Query,
   Put,
   ParseIntPipe,
+  Delete,
 } from '@nestjs/common';
 import { DataService } from './data.service';
-import { CreateDatumDto } from './dto/create-datum.dto';
-import { MyValidation } from './validation-pipes';
 
 @Controller('data')
 export class DataController {
@@ -28,7 +26,7 @@ export class DataController {
   }
 
   // * Via API
-  // ! Example of a built-in validation pipe (for Params)
+  // ! Example of a built-in validation pipe (for Req params)
   @Post('create/many/:amount')
   async createMany(@Param('amount', new ParseIntPipe()) amount: number) {
     return this.dataService.createMany(amount);
@@ -47,5 +45,10 @@ export class DataController {
     @Query('randomId') randomId: string,
   ) {
     return this.dataService.updateOneItem(keyName, randomId);
+  }
+
+  @Delete(':keyName')
+  async deleteOne(@Param('keyName') keyName: string) {
+    return this.dataService.deleteOneItem(keyName);
   }
 }

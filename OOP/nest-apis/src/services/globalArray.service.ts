@@ -29,7 +29,7 @@ class GlobalArray {
       const instance = (await this.getInstance()).get(`/${keyName}`);
       const response = (await instance).data;
 
-      return response.data;
+      return response;
     } catch (error) {
       return error;
     }
@@ -42,7 +42,16 @@ class GlobalArray {
     return response;
   }
 
-  async deleteRecord(keyName: string) /*Promise<{ message: string }>*/ {}
+  async deleteRecord(keyName: string): Promise<object> {
+    try {
+      const instance = (await this.getInstance()).delete(`/${keyName}`);
+      const response = (await instance).data;
+
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
 
   private async getInstance() {
     return axios.create({
