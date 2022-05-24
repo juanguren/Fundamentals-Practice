@@ -1,4 +1,4 @@
-import { asyncMethod } from "../logic/async-methods";
+import { asyncMethod, getFilms, IItem, swapiGet } from "../logic/async-methods";
 
 describe("Test some random async methods", () => {
   it("should return a promise", () => {
@@ -14,6 +14,27 @@ describe("Test some random async methods", () => {
       await asyncMethod(false);
     } catch (error) {
       expect(error).toBe("Error");
+    }
+  });
+});
+
+describe("Test external API calls", () => {
+  it("Should return data", async () => {
+    const mockItemObject: IItem = {
+      element: "planets",
+      id: "2",
+    };
+    const response = await swapiGet(mockItemObject);
+
+    expect(response).toBeDefined();
+    expect(response).toHaveProperty("name");
+  });
+  it("Should retrieve all of the films as solved promises", async () => {
+    const films = await getFilms();
+
+    expect(films.length).toBeGreaterThan(0);
+    for (const film of films) {
+      expect(film).toHaveProperty("opening_crawl");
     }
   });
 });
