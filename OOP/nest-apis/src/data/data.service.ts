@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateDatumDto } from './dto/create-datum.dto';
-import globalArrayService from 'src/services/globalArray.service';
+import { GlobalArray } from 'src/services/globalArray.service';
 
 import axios from 'axios';
 import { CreateRecordDTO, GetRecordDTO } from 'src/services/globalArray-types';
@@ -8,6 +7,7 @@ import { returnRecordObject } from 'src/utils/util';
 
 @Injectable()
 export class DataService {
+  constructor(private readonly globalArrayService: GlobalArray) {}
   async createOne(id: string, keyName: string) {
     try {
       const response = await axios.get(
@@ -17,7 +17,7 @@ export class DataService {
 
       const shouldOverwrite = false;
       const dataObject = returnRecordObject(newItem, keyName, shouldOverwrite);
-      const recordResponse = await globalArrayService.createRecord(dataObject);
+      const recordResponse = await this.globalArrayService.createRecord(dataObject);
       recordResponse.object = dataObject;
 
       return recordResponse;
@@ -47,7 +47,7 @@ export class DataService {
         shouldOverwrite,
       );
 
-      const recordResponse = (await globalArrayService.createRecord(
+      const recordResponse = (await this.globalArrayService.createRecord(
         dataObject,
       )) as CreateRecordDTO | any;
 
@@ -63,7 +63,7 @@ export class DataService {
   }
 
   async getOneItem(keyName: string): Promise<GetRecordDTO> {
-    return globalArrayService.getRecord(keyName);
+    return this.globalArrayService.getRecord(keyName);
   }
 
   async updateOneItem(keyName: string, id: string) {
@@ -76,11 +76,11 @@ export class DataService {
       const shouldOverwrite = true;
       const dataObject = returnRecordObject(newItem, keyName, shouldOverwrite);
 
-      return globalArrayService.updateRecord(dataObject);
+      return this.globalArrayService.updateRecord(dataObject);
     } catch (error) {}
   }
 
   async deleteOneItem(keyName: string) {
-    return globalArrayService.deleteRecord(keyName);
+    return this.globalArrayService.deleteRecord(keyName);
   }
 }

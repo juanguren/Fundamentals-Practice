@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const { GLOBAL_ARRAY_KEY, GLOBAL_ARRAY_BASE_URL } = process.env;
 
-class GlobalArray {
+export class GlobalArray {
   private token: string = GLOBAL_ARRAY_KEY;
   private baseUrl: string = GLOBAL_ARRAY_BASE_URL;
 
@@ -61,5 +61,3 @@ class GlobalArray {
     });
   }
 }
-
-export default new GlobalArray();
