@@ -7,11 +7,17 @@ import axios from 'axios';
 
 const { GLOBAL_ARRAY_KEY, GLOBAL_ARRAY_BASE_URL } = process.env;
 
-export class GlobalArray {
-  private token: string = GLOBAL_ARRAY_KEY;
-  private baseUrl: string = GLOBAL_ARRAY_BASE_URL;
+class GlobalArray {
+  private token: string;
+  private baseUrl: string;
 
-  constructor() {}
+  constructor() {
+    if (!GLOBAL_ARRAY_KEY) {
+      console.error('GLOBAL_ARRAY_KEY is not set');
+    }
+    this.token = GLOBAL_ARRAY_KEY;
+    this.baseUrl = GLOBAL_ARRAY_BASE_URL;
+  }
 
   async createRecord(body: CreateRecordDTO): Promise<CreatedRecordDTO> {
     try {
@@ -61,3 +67,5 @@ export class GlobalArray {
     });
   }
 }
+
+export default new GlobalArray();
