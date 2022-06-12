@@ -18,7 +18,7 @@ export class DataService {
       const shouldOverwrite = false;
       const dataObject = returnRecordObject(newItem, keyName, shouldOverwrite);
       const recordResponse = await globalArrayService.createRecord(dataObject);
-      recordResponse.object = dataObject;
+      recordResponse.record = dataObject;
 
       return recordResponse;
     } catch (error) {
