@@ -11,7 +11,7 @@ interface Instructions {
 export interface CreatedRecordDTO {
   message: string;
   keyName: string;
-  object: CreateRecordDTO;
+  record: CreateRecordDTO;
 }
 
 export interface GetRecordDTO {
