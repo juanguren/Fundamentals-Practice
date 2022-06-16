@@ -3,6 +3,8 @@ import { RedisClientType } from '@redis/client';
 import { createClient } from 'redis';
 import { RedisDataDTO } from './cache-types';
 
+// * Turn redis on in local (in terminal: redis-server)
+
 class CacheService {
   client: RedisClientType;
   constructor() {

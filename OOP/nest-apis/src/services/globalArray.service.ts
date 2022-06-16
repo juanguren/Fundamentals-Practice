@@ -34,7 +34,7 @@ class GlobalArray {
         };
         await cacheService.setData(cacheObject);
       }
-      // ! TODO: Change globalArray's baseUrl to reflect latest changes in json's respone (or promote to all)
+      
       return storageResponse;
     } catch (error) {
       return error;
@@ -55,7 +55,7 @@ class GlobalArray {
     }
   }
 
-  async updateRecord(item: object): Promise<object> {
+  async updateRecord(item: CreateRecordDTO): Promise<object> {
     const instance = (await this.getInstance()).post('/', item);
     const response = (await instance).data;
 
