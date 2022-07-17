@@ -47,17 +47,13 @@ export default class Hero implements IHero {
     this.inventory = { items: [] };
   }
 
-  getInventory() {
-    return this.inventory;
+  set includeInInventory(item: any) {
+    this.inventory.items.push(item);
   }
 
-  includeInInventory(item: any) {
-    this.inventory.items.push(item);
-    return this.getInventory();
+  getInventory() {
+    return this.inventory;
   }
 }
 
 export const createNewHero = (name: string): Hero => new Hero(name);
-export const getHeroInventory = (hero: Hero) => hero.getInventory();
-export const includeInInventory = (hero: Hero, item: any) =>
-  hero.includeInInventory(item);

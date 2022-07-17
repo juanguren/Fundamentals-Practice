@@ -3,8 +3,6 @@ import Hero, {
   largestOfFour,
   multiplyByX,
   createNewHero,
-  getHeroInventory,
-  includeInInventory,
 } from "../logic/sync-methods";
 import { IHero } from "../types/types";
 const faker = require("faker");
@@ -70,18 +68,19 @@ describe("Test some random sync methods", () => {
       expect(newHero).toBeInstanceOf(Hero);
       expect(newHero).toEqual(expected);
     });
-    it("Should correctly retrieve the Heros inventory", () => {
-      const getHeroInventoryResponse = getHeroInventory(newHero);
+    it("Should correctly retrieve the Hero's inventory", () => {
+      const getHeroInventoryResponse = newHero.getInventory();
 
       expect(getHeroInventoryResponse).toHaveProperty("items");
       expect(getHeroInventoryResponse.items).toEqual([]);
     });
-    it("Should correctly include new items to a Heros inventory", () => {
+    it("Should correctly include new items to a Hero's inventory", () => {
       const mockItem = faker.commerce.product();
-      const includeInInventoryResponse = includeInInventory(newHero, mockItem);
+      newHero.includeInInventory = mockItem;
+      const inventory = newHero.getInventory();
 
-      expect(includeInInventoryResponse).toHaveProperty("items");
-      expect(includeInInventoryResponse.items).toContain(mockItem);
+      expect(inventory).toHaveProperty("items");
+      expect(inventory.items).toContain(mockItem);
     });
   });
 });
