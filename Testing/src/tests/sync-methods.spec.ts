@@ -3,6 +3,7 @@ import Hero, {
   largestOfFour,
   multiplyByX,
   createNewHero,
+  SingletonConnection,
 } from "../logic/sync-methods";
 import { IHero } from "../types/types";
 const faker = require("faker");
@@ -81,6 +82,16 @@ describe("Test some random sync methods", () => {
 
       expect(inventory).toHaveProperty("items");
       expect(inventory.items).toContain(mockItem);
+    });
+  });
+  describe("SingletonConnection Class", () => {
+    const instance1 = SingletonConnection.getInstance();
+    it("Should return a singleton instance of the class", () => {
+      const instance2 = SingletonConnection.getInstance();
+
+      expect(instance1).toStrictEqual(instance2);
+      expect(instance1).toBeInstanceOf(SingletonConnection);
+      expect(SingletonConnection.url).toBe('http://localhost:3000');
     });
   });
 });

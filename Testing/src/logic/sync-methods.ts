@@ -57,3 +57,21 @@ export default class Hero implements IHero {
 }
 
 export const createNewHero = (name: string): Hero => new Hero(name);
+
+export class SingletonConnection {
+  private static instance: SingletonConnection;
+  private urlString: string = "http://localhost:3000";
+
+  private constructor() {}
+
+  public static getInstance(): SingletonConnection {
+    if (!this.instance) {
+      this.instance = new SingletonConnection();
+    }
+    return this.instance;
+  }
+
+  public static get url() {
+    return this.getInstance().urlString;
+  }
+}
