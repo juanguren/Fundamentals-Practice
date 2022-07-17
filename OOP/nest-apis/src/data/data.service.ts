@@ -77,7 +77,9 @@ export class DataService {
       const dataObject = returnRecordObject(newItem, keyName, shouldOverwrite);
 
       return globalArrayService.updateRecord(dataObject);
-    } catch (error) {}
+    } catch (error) {
+      return error;
+    }
   }
 
   async deleteOneItem(keyName: string) {
