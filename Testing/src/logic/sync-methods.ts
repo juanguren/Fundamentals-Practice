@@ -82,4 +82,14 @@ export class Media {
   constructor(content: IMovie[]) {
     this.movies = content;
   }
+
+  get movie() {
+    return this.getMovieQueue();
+  }
+
+  private *getMovieQueue() {
+    for (let movie of this.movies) {
+      yield movie;
+    }
+  }
 }

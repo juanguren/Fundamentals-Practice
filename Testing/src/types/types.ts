@@ -19,9 +19,10 @@ export enum MovieGenres {
 }
 
 export interface IMovie {
+  id: string;
   name: string;
   duration: number;
-  id: string;
-  dateOfRelease: Date;
+  year: Date;
   genre: MovieGenres;
+  rating: number;
 }
