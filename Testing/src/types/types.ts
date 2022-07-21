@@ -11,3 +11,17 @@ export interface IHero {
   level: number;
   inventory: any;
 }
+
+export enum MovieGenres {
+  ACTION = "action",
+  HORROR = "horror",
+  SCI_FI = "sci_fi",
+}
+
+export interface IMovie {
+  name: string;
+  duration: number;
+  id: string;
+  dateOfRelease: Date;
+  genre: MovieGenres;
+}
