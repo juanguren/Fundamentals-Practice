@@ -84,7 +84,8 @@ export class Media {
   }
 
   get movie() {
-    return this.getMovieQueue();
+    const generate = this.getMovieQueue();
+    return generate.next();
   }
 
   private *getMovieQueue() {
