@@ -1,4 +1,12 @@
-const getElement = (list: number[], target: number): number => {
+
+/**
+ * Binary Search | Complexity O(log n)
+ * @param list Array of numbers
+ * @param target number to search for
+ * @returns The number if it exists, otherwise throws an error
+ */
+
+const getElement = (list: number[], target: number): number | Error => {
   const orderedList = list.sort(orderSort);
   const index = Math.floor(orderedList.length / 2);
 
