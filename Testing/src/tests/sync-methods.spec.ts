@@ -125,6 +125,5 @@ describe("Test some random sync methods", () => {
 
       expect(movie1.value).toEqual(mockMediaData[0]);
     });
-    it("Should yield 2nd movie correctly", () => {});
   });
 });
