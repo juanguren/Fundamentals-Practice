@@ -17,7 +17,7 @@ const getElement = (list: number[], target: number): number | Error => {
   }
   const half = orderedList.splice(index);
   if (half.length <= 2) {
-    if (!half.includes(target)) return target;
+    if (half.includes(target)) return target;
     throw "Element does not exist";
   }
   return getElement(half, target);
