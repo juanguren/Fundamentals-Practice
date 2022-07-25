@@ -115,6 +115,16 @@ describe("Test some random sync methods", () => {
       },
     ];
     const mediaInstance = new Media(mockMediaData);
+
+    const getterMovieMock = jest
+      .spyOn(Media.prototype, "movie", "get")
+      .mockImplementation(() => {
+        return {
+          value: mockMediaData[0],
+          done: false,
+        } as IteratorResult<IMovie, void>;
+      });
+
     it("Should instantiate correctly", () => {
       expect(mediaInstance).toBeDefined();
       expect(mediaInstance).toBeInstanceOf(Media);
@@ -124,6 +134,7 @@ describe("Test some random sync methods", () => {
       const movie1 = mediaInstance.movie;
 
       expect(movie1.value).toEqual(mockMediaData[0]);
+      expect(getterMovieMock).toHaveBeenCalled();
     });
   });
 });
