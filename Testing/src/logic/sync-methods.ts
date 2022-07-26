@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { IHero, IUser } from "../types/types";
+import { IHero, IMovie, IUser } from "../types/types";
 const faker = require("faker");
 
 export const multiplyByX = (array: any[], multiplier: number): any => {
@@ -73,5 +73,24 @@ export class SingletonConnection {
 
   public static get url() {
     return this.getInstance().urlString;
+  }
+}
+
+export class Media {
+  public movies: IMovie[];
+
+  constructor(content: IMovie[]) {
+    this.movies = content;
+  }
+
+  get movie() {
+    const generate = this.getMovieQueue();
+    return generate.next();
+  }
+
+  private *getMovieQueue() {
+    for (let movie of this.movies) {
+      yield movie;
+    }
   }
 }

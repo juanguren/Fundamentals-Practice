@@ -4,8 +4,9 @@ import Hero, {
   multiplyByX,
   createNewHero,
   SingletonConnection,
+  Media,
 } from "../logic/sync-methods";
-import { IHero } from "../types/types";
+import { IHero, IMovie, MovieGenres } from "../types/types";
 const faker = require("faker");
 
 describe("Test some random sync methods", () => {
@@ -91,7 +92,49 @@ describe("Test some random sync methods", () => {
 
       expect(instance1).toStrictEqual(instance2);
       expect(instance1).toBeInstanceOf(SingletonConnection);
-      expect(SingletonConnection.url).toBe('http://localhost:3000');
+      expect(SingletonConnection.url).toBe("http://localhost:3000");
+    });
+  });
+  describe("Movie class", () => {
+    const mockMediaData: IMovie[] = [
+      {
+        id: "mockId",
+        name: "mockName",
+        duration: 140,
+        year: new Date(),
+        genre: MovieGenres.SCI_FI,
+        rating: 3,
+      },
+      {
+        id: "mockId2",
+        name: "mockName2",
+        duration: 120,
+        year: new Date(),
+        genre: MovieGenres.HORROR,
+        rating: 4,
+      },
+    ];
+    const mediaInstance = new Media(mockMediaData);
+
+    const getterMovieMock = jest
+      .spyOn(Media.prototype, "movie", "get")
+      .mockImplementation(() => {
+        return {
+          value: mockMediaData[0],
+          done: false,
+        } as IteratorResult<IMovie, void>;
+      });
+
+    it("Should instantiate correctly", () => {
+      expect(mediaInstance).toBeDefined();
+      expect(mediaInstance).toBeInstanceOf(Media);
+      expect(mediaInstance.movies).toBe(mockMediaData);
+    });
+    it("Should yield movies correctly", () => {
+      const movie1 = mediaInstance.movie;
+
+      expect(movie1.value).toEqual(mockMediaData[0]);
+      expect(getterMovieMock).toHaveBeenCalled();
     });
   });
 });
