@@ -8,8 +8,7 @@ function confirmEnding(word: string, target: string): boolean {
     stringLength - targetLength
   );
 
-  if (lastCharacter == target) return true;
-  return false;
+  return lastCharacter == target;
 }
 
 confirmEnding("Bastian", "n");
