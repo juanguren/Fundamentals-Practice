@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import globalArrayService  from 'src/services/globalArray.service';
 
 import axios from 'axios';
+import * as fs from 'fs';
 import { CreateRecordDTO, GetRecordDTO } from 'src/services/globalArray-types';
 import { returnRecordObject } from 'src/utils/util';
 
@@ -63,7 +64,10 @@ export class DataService {
   }
 
   async getOneItem(keyName: string): Promise<GetRecordDTO> {
-    return globalArrayService.getRecord(keyName);
+    const foundData = await globalArrayService.getRecord(keyName) as any;
+    fs.writeFileSync(`${foundData.data.key}.json`, JSON.stringify(foundData));
+
+    return foundData as GetRecordDTO;
   }
 
   async updateOneItem(keyName: string, id: string) {
